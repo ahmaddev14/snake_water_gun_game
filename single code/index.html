@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake Water Gun Game</title>
+  <style>
+    body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; margin: 0; }
+    .container { text-align: center; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); width: 300px; }
+    h1 { margin-bottom: 20px; }
+    button { padding: 10px 20px; margin: 10px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px; }
+    button:hover { background-color: #45a049; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Snake Water Gun Game</h1>
+    <div>
+      <button onclick="play('snake')">Snake</button>
+      <button onclick="play('water')">Water</button>
+      <button onclick="play('gun')">Gun</button>
+    </div>
+    <div id="result">Choose your move!</div>
+    <div>
+      <p>Player Score: <span id="player-score">0</span></p>
+      <p>Computer Score: <span id="computer-score">0</span></p>
+    </div>
+  </div>
+
+  <script>
+    let playerScore = 0, computerScore = 0;
+
+    function play(playerChoice) {
+      const computerChoice = getComputerChoice();
+      const result = getResult(playerChoice, computerChoice);
+      if (result === "You Win!") playerScore++;
+      else if (result === "You Lose!") computerScore++;
+      document.getElementById('player-score').textContent = playerScore;
+      document.getElementById('computer-score').textContent = computerScore;
+      document.getElementById('result').textContent = `You chose ${playerChoice}. Computer chose ${computerChoice}. ${result}`;
+    }
+
+    function getComputerChoice() {
+      const choices = ['snake', 'water', 'gun'];
+      return choices[Math.floor(Math.random() * 3)];
+    }
+
+    function getResult(playerChoice, computerChoice) {
+      if (playerChoice === computerChoice) return "It's a Draw!";
+      if (
+        (playerChoice === 'snake' && computerChoice === 'water') ||
+        (playerChoice === 'water' && computerChoice === 'gun') ||
+        (playerChoice === 'gun' && computerChoice === 'snake')
+      ) return "You Win!";
+      return "You Lose!";
+    }
+  </script>
+
+</body>
+</html>
